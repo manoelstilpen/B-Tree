@@ -1,3 +1,8 @@
+/*
+ * Author: Manoel Stilpen
+ * Email: manoelvstilpen@gmail.com
+ */
+ 
 #include "Commons.h"
 
 void printRegister(Registro* registro){

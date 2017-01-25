@@ -1,3 +1,8 @@
+/*
+ * Author: Manoel Stilpen
+ * Email: manoelvstilpen@gmail.com
+ */
+ 
 #ifndef TP1_COMMONS_H_
 #define TP1_COMMONS_H_
 

@@ -1,3 +1,8 @@
+/*
+ * Author: Manoel Stilpen
+ * Email: manoelvstilpen@gmail.com
+ */
+
 #include "Gerador.h"
 
 //dados para gerar string aleatoria

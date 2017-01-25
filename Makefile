@@ -21,6 +21,3 @@ run:
 .PHONY : clean 
 clean:
 	rm $(BINARIES) $(OBJECTS)
-
-clean-files:
-	rm saida/*

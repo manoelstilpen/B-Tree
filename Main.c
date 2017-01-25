@@ -1,3 +1,8 @@
+/*
+ * Author: Manoel Stilpen
+ * Email: manoelvstilpen@gmail.com
+ */
+ 
 #include "B+Tree.h"
 #include "Commons.h"
 #include "Gerador/Gerador.h"

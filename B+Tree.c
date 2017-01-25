@@ -1,3 +1,8 @@
+/*
+ * Author: Manoel Stilpen
+ * Email: manoelvstilpen@gmail.com
+ */
+ 
 #include "B+Tree.h"
 
 void search_int_tree(int key, Node** ap, Analise* analysis){

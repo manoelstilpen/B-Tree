@@ -1,3 +1,8 @@
+/*
+ * Author: Manoel Stilpen
+ * Email: manoelvstilpen@gmail.com
+ */
+ 
 #ifndef TP1_ARVOREB2_H_
 #define TP1_ARVOREB2_H_
 
