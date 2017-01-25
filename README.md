@@ -21,6 +21,7 @@ To compile:
 
 `make`
 
+Compiling the program generates a binary file called b+tree.
 To run there's some allowed options:
 
 <ol>
