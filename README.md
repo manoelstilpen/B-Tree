@@ -1,19 +1,19 @@
 # B* or B+ Tree
 
-This program provides a search execution analysis of B* Tree. 
+This program provides a search execution benchmark of B* Tree.
 
-The search analysis consists of two parts:
-<ul> 
-<li> 
-  The first one gets the number of comparisons, number of transfers from disk and execution time from the preprocessing           part, that's the period which the program is building the tree. 
+The search benchmark consists of two parts:
+<ul>
+<li>
+  The first one gets the number of comparisons, number of transfers from disk and execution time from the preprocessing           part, that's the period which the program is building the tree.
 </li>
 
-<li> 
+<li>
   The second one is based on the same criterias, but get them from the searching period in the tree.
 </li>
 </ul>
 
-At the end of the execution a message is printed showing if the key was found or not and a message containing all the analysis content.
+At the end of the execution a message is printed showing if the key was found or not and a message containing all the benchmark data.
 
 ## How to execute?
 
@@ -42,5 +42,3 @@ To run there's some allowed options:
     </li>
     <li> Only emphasizing that you can run all this commands in the same execution. </li>
 </ol>
-
-
