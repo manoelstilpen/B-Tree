@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with B-Tree.  If not, see <http://www.gnu.org/licenses/>.
  */
 
  /*
@@ -24,7 +24,7 @@
 
 #include "B+Tree.h"
 
-void search_int_tree(int key, Node** ap, Analise* analysis){
+void search_in_tree(int key, Node** ap, Analise* analysis){
 	int i=1;
 	Node* pag = *ap;
 
@@ -37,9 +37,9 @@ void search_int_tree(int key, Node** ap, Analise* analysis){
 
 		analysis->comparacoes_pesquisa++;
 		if(key < pag->pag.internal.keys[i-1]){
-			search_int_tree(key, &pag->pag.internal.pointers[i-1], analysis);
+			search_in_tree(key, &pag->pag.internal.pointers[i-1], analysis);
 		} else {
-			search_int_tree(key, &pag->pag.internal.pointers[i], analysis);
+			search_in_tree(key, &pag->pag.internal.pointers[i], analysis);
 		}
 
 		return;
@@ -53,11 +53,11 @@ void search_int_tree(int key, Node** ap, Analise* analysis){
 	analysis->comparacoes_pesquisa++;
 	if(key == pag->pag.external.registers[i-1].key){
 		#ifdef PRINT
-			printf("Key finded!!\n");
+			printf("THE KEY %d WERE FOUND!!\n", key);
 			printRegister(&pag->pag.external.registers[i-1]);
 		#endif
 	} else {
-		printf("Key not finded!\n");
+		printf("THE KEY %d WERE NOT FOUND!\n", key);
 	}
 
 	return;
@@ -223,28 +223,28 @@ void insert_in_tree(Registro* reg, Node* page, int* overflow, Node** no_retorno,
 	}
 }
 
-void insert_register(Registro* reg, Node** raiz, Analise* analysis){
-	//arvore inicialmente vazia
-	if((*raiz) == NULL){
-		*raiz = (Node*) malloc(sizeof(Node));
-		(*raiz)->type = LEAF;
-		(*raiz)->pag.external.quant = 1;
-		(*raiz)->pag.external.registers[0] = *reg;
+void insert_register(Registro* reg, Node** root, Analise* analysis){
+	// tree initially empty
+	if((*root) == NULL){
+		*root = (Node*) malloc(sizeof(Node));
+		(*root)->type = LEAF;
+		(*root)->pag.external.quant = 1;
+		(*root)->pag.external.registers[0] = *reg;
 		return;
 	}
 
 	int overflow = false;
 	Node* novo;
 	int new_key;
-	insert_in_tree(reg, *raiz, &overflow, &novo, &new_key, analysis);
+	insert_in_tree(reg, *root, &overflow, &novo, &new_key, analysis);
 
 	if(overflow == true){
-		if((*raiz)->type == LEAF){
+		if((*root)->type == LEAF){
 			Node* aux2 = (Node*) malloc(sizeof(Node));
 			aux2->type = LEAF;
-			aux2->pag.external.quant = (*raiz)->pag.external.quant;
-			for(int i=0 ; i<(*raiz)->pag.external.quant ; i++){
-				aux2->pag.external.registers[i] = (*raiz)->pag.external.registers[i];
+			aux2->pag.external.quant = (*root)->pag.external.quant;
+			for(int i=0 ; i<(*root)->pag.external.quant ; i++){
+				aux2->pag.external.registers[i] = (*root)->pag.external.registers[i];
 			}
 
 			Node* aux = (Node*) malloc(sizeof(Node));
@@ -254,56 +254,59 @@ void insert_register(Registro* reg, Node** raiz, Analise* analysis){
 			aux->pag.internal.pointers[0] = aux2;
 			aux->pag.internal.pointers[1] = novo;
 
-			*raiz = aux;
+			*root = aux;
 		} else {
 
 			Node* new_head = (Node*) malloc(sizeof(Node));
 			new_head->type = INTERNAL;
 			new_head->pag.internal.quant = 1;
 			new_head->pag.internal.keys[0] = new_key;
-			new_head->pag.internal.pointers[0] = *raiz;
+			new_head->pag.internal.pointers[0] = *root;
 			new_head->pag.internal.pointers[1] = novo;
 
-			*raiz = new_head;
+			*root = new_head;
 
 		}
 	}
 
 }
 
-Analise* run_bPlus_tree(char* nomeArquivo, int key_pesquisa){
+Analise* run_bPlus_tree(char* file_name, int search_key){
 	FILE* arq;
-	if((arq = fopen(nomeArquivo, "rb")) == NULL) printf("RUIM NO ARQUIVO\n");
+	if((arq = fopen(file_name, "rb")) == NULL) printf("FILE ERROR\n");
 
 	Registro x;
-	Node* raiz;
+	Node* root;
 
 	Analise* analysis = init_analysis();
 
-	clock_t inicio = clock();
-	#ifdef PRINT
-		printf("GENERATING B* TREE...\n");
-	#endif
-	init_nodedo(&raiz);
-	while(fread(&x, sizeof(Registro), 1, arq) == 1){
-		analysis->transferencias_preparacao++;
-		insert_register(&x, &raiz, analysis);
-	}
+	// init generating tree
+	clock_t begin = clock();
+		#ifdef PRINT
+			printf("GENERATING B* TREE...\n");
+		#endif
+		init_node(&root);
+		while(fread(&x, sizeof(Registro), 1, arq) == 1){
+			analysis->transferencias_preparacao++;
+			insert_register(&x, &root, analysis);
+		}
 
-	fclose(arq);
-	analysis->tempo_preparacao = (double) (clock() - inicio)/CLOCKS_PER_SEC;
+		fclose(arq);
+	analysis->tempo_preparacao = (double) (clock() - begin)/CLOCKS_PER_SEC;
 
 	#ifdef PRINT
 		printf("INITIALIZING SEARCH...\n");
 	#endif
-	inicio = clock();
-	search_int_tree(key_pesquisa, &raiz, analysis);
-	analysis->tempo_pesquisa = (double) (clock() - inicio)/CLOCKS_PER_SEC;
+
+	// start search key in the generated tree
+	begin = clock();
+		search_in_tree(search_key, &root, analysis);
+	analysis->tempo_pesquisa = (double) (clock() - begin)/CLOCKS_PER_SEC;
 
 	return analysis;
 }
 
-void init_nodedo(Node** no){
+void init_node(Node** no){
 	*no = NULL;
 }
 
@@ -311,10 +314,10 @@ void printRec(Node* p, int nivel){
 	if (p == NULL) return;
 
 	if(p->type == INTERNAL){
-		printf("NIVEL: %d\n", nivel);
+		printf("LEVEL: %d\n", nivel);
 		nivel++;
 		for(int i=0 ; i<p->pag.internal.quant ; i++){
-			printf("%*s CHAVE %d\n", 4*(nivel-1), "", p->pag.internal.keys[i]);
+			printf("%*s KEY %d\n", 4*(nivel-1), "", p->pag.internal.keys[i]);
 			printRec(p->pag.internal.pointers[i], nivel);
 			printRec(p->pag.internal.pointers[i+1], nivel);
 		}

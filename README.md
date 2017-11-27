@@ -15,7 +15,7 @@ The search benchmark consists of two parts:
 
 At the end of the execution a message is printed showing if the key was found or not and a message containing all the benchmark data.
 
-This project also provides a function to generate your file to search a key in. It creates a binary file with determined number of inputs (aka registers) using the struct: 
+This project also provides a function to generate your file to search a key in. It creates a binary file with determined number of inputs (aka registers) using the struct:
 
 ```
 typedef struct{
@@ -63,5 +63,4 @@ To run there's some allowed options:
 
  - Using the file created above to perform a search on it. In this case we are searching for key 50000.
 
-`./b+tree -p 50000`
-
+`./b+tree -p 50000 -n file.bin`

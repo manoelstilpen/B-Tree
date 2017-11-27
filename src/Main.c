@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with B-Tree.  If not, see <http://www.gnu.org/licenses/>.
  */
 
  /*
@@ -68,7 +68,7 @@ int main(int argc, char** argv){
 
 	int order = ASCENDING;
 	clock_t begin;
-	
+
 	Analise* analysis = init_analysis();
 
 	if(argc == 1){

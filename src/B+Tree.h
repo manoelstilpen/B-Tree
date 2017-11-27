@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with B-Tree.  If not, see <http://www.gnu.org/licenses/>.
  */
 
  /*
@@ -62,7 +62,7 @@ void insertPointerInArray(Node*, Node**, Analise*);
 
 void insert_register(Registro*, Node**, Analise*);
 void insert_in_tree(Registro*, Node*, int*, Node**, int*, Analise*);
-void search_int_tree(int, Node** Ap, Analise*);
+void search_in_tree(int, Node** Ap, Analise*);
 Analise* run_bPlus_tree(char*, int);
 
 void printTree(Node*);
