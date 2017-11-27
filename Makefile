@@ -10,7 +10,7 @@ OBJECTS = $(SOURCES:.c=.o)
 	$(COMPILER) -c -o $@ $< -w
 
 all: $(EXEC_PROG)
-	@echo TP1 Build Completed
+	@echo Build Completed
 
 $(EXEC_PROG): $(OBJECTS)
 	$(COMPILER) -o $(EXEC_PROG) $(OBJECTS)
@@ -18,6 +18,6 @@ $(EXEC_PROG): $(OBJECTS)
 run:
 	./$(EXEC_PROG)
 
-.PHONY : clean 
+.PHONY : clean
 clean:
 	rm $(BINARIES) $(OBJECTS)

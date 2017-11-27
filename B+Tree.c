@@ -1,8 +1,27 @@
-/*
- * Author: Manoel Stilpen
- * Email: manoelvstilpen@gmail.com
+// Copyright (C) 2016 Manoel Stilpen
+
+/* This file is part of B-Tree project.
+ *
+ * B-Tree project is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * B-Tree project is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
+ /*
+  * @Author: Manoel Stilpen
+  * @Email: manoel@decom.ufop.br
+  * @FullProject: https://github.com/manoelstilpen/B-Tree
+  */
+
 #include "B+Tree.h"
 
 void search_int_tree(int key, Node** ap, Analise* analysis){
@@ -15,7 +34,7 @@ void search_int_tree(int key, Node** ap, Analise* analysis){
 			i++;
 			analysis->comparacoes_pesquisa++;
 		}
-		
+
 		analysis->comparacoes_pesquisa++;
 		if(key < pag->pag.internal.keys[i-1]){
 			search_int_tree(key, &pag->pag.internal.pointers[i-1], analysis);
@@ -142,7 +161,7 @@ void insert_in_tree(Registro* reg, Node* page, int* overflow, Node** no_retorno,
 
 			// DEFINES WHERE TO INSERT THE NEW REGISTER
 			if(reg->key > (page)->pag.external.registers[(ORDER_LEAF/2)-1].key){
-				//NEW REGISTER NEED TO BE INSERTED IN THE NEW NODE 
+				//NEW REGISTER NEED TO BE INSERTED IN THE NEW NODE
 				insertRegisterInArray(reg, no_retorno, analysis);
 			} else {
 				insertRegisterInArray(reg, &page, analysis);
@@ -268,7 +287,7 @@ Analise* run_bPlus_tree(char* nomeArquivo, int key_pesquisa){
 	init_nodedo(&raiz);
 	while(fread(&x, sizeof(Registro), 1, arq) == 1){
 		analysis->transferencias_preparacao++;
-		insert_register(&x, &raiz, analysis);		
+		insert_register(&x, &raiz, analysis);
 	}
 
 	fclose(arq);
@@ -288,7 +307,7 @@ void init_nodedo(Node** no){
 	*no = NULL;
 }
 
-void printRec(Node* p, int nivel){ 
+void printRec(Node* p, int nivel){
 	if (p == NULL) return;
 
 	if(p->type == INTERNAL){
@@ -299,7 +318,7 @@ void printRec(Node* p, int nivel){
 			printRec(p->pag.internal.pointers[i], nivel);
 			printRec(p->pag.internal.pointers[i+1], nivel);
 		}
-	} 
+	}
 
 	if (p->type == LEAF){
 		printf("%*s", 4*nivel, "");
@@ -309,9 +328,9 @@ void printRec(Node* p, int nivel){
 		}
 		putchar('\n');
 	}
-} 
-void printTree(Node* p){ 
-	int  n = 0; 
+}
+void printTree(Node* p){
+	int  n = 0;
 	printRec(p, n);
 	printf("\n");
-} 
+}

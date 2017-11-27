@@ -1,15 +1,34 @@
-/*
- * Author: Manoel Stilpen
- * Email: manoelvstilpen@gmail.com
+// Copyright (C) 2016 Manoel Stilpen
+
+/* This file is part of B-Tree project.
+ *
+ * B-Tree project is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * B-Tree project is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
+ /*
+  * @Author: Manoel Stilpen
+  * @Email: manoel@decom.ufop.br
+  * @FullProject: https://github.com/manoelstilpen/B-Tree
+  */
+
 #include "Commons.h"
 
 void printRegister(Registro* registro){
 	printf("%d %ld %s\n", registro->key, registro->dado1, registro->dado2);
 }
 
-//usado apenas para conferir integridade do arquivo binario
+// used to check the binary file integrity
 void printFile(char *nomeArquivo){
 	Registro registro;
 	FILE* arq = fopen(nomeArquivo, "rb");
@@ -19,6 +38,7 @@ void printFile(char *nomeArquivo){
     fclose(arq);
 }
 
+// initialize benchmark struct
 Analise* init_analysis(){
 	Analise* analise = (Analise*) malloc(sizeof(Analise));
 	analise->transferencias_preparacao = 0;
@@ -32,19 +52,20 @@ Analise* init_analysis(){
 	return analise;
 }
 
+// print benchmark data
 void printAnalysis(Analise* analise){
 	#ifdef PRINT
 		printf("\nPREPROCESSING:\n");
-		printf("TRANSFERS: %d COMPARATIONS: %d TIME: %f\n", 
+		printf("TRANSFERS: %d COMPARATIONS: %d TIME: %f\n",
 			analise->transferencias_preparacao, analise->comparacoes_preparacao, analise->tempo_preparacao);
 		printf("SEARCH:\n");
-		printf("TRANSFERS: %d COMPARATIONS: %d TIME: %f\n", 
+		printf("TRANSFERS: %d COMPARATIONS: %d TIME: %f\n",
 			analise->transferencias_pesquisa, analise->comparacoes_pesquisa, analise->tempo_pesquisa);
 		printf("=================================================================\n");
 	#endif
 
 	#ifndef PRINT
 		printf("%d|%f|%d\n", analise->comparacoes_preparacao, analise->tempo_preparacao, analise->transferencias_preparacao);
-		printf("%d|%f|%d\n", analise->comparacoes_pesquisa, analise->tempo_pesquisa, analise->transferencias_pesquisa);		
+		printf("%d|%f|%d\n", analise->comparacoes_pesquisa, analise->tempo_pesquisa, analise->transferencias_pesquisa);
 	#endif
 }

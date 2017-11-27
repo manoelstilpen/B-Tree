@@ -1,7 +1,26 @@
-/*
- * Author: Manoel Stilpen
- * Email: manoelvstilpen@gmail.com
+// Copyright (C) 2016 Manoel Stilpen
+
+/* This file is part of B-Tree project.
+ *
+ * B-Tree project is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * B-Tree project is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+ /*
+  * @Author: Manoel Stilpen
+  * @Email: manoel@decom.ufop.br
+  * @FullProject: https://github.com/manoelstilpen/B-Tree
+  */
 
 #include "Gerador.h"
 
@@ -18,21 +37,21 @@ void generateRandomString(char* vec, int size){
 
 void fillRegisters(Registro* registers, int quantity, int order){
 
-	if(order == CRESCENTE){
+	if(order == ASCENDING){
 		for(int i=0 ; i<quantity ; i++){
 			registers[i].key = i;
 			registers[i].dado1 = rand() % 1000;
 			generateRandomString(registers[i].dado2, TAM_CHAR_REGISTRO);
-		}	
+		}
 
-	} else if(order == DECRESCENTE){
+	} else if(order == DESCENDING){
 		for(int i=quantity-1 ; i>= 0 ; i--){
 			registers[i].key = quantity-i-1;
 			registers[i].dado1 = rand() % 1000;
 			generateRandomString(registers[i].dado2, TAM_CHAR_REGISTRO);
 		}
 
-	} else if(order == ALEATORIO){
+	} else if(order == RANDOM){
 
 		for(int i=0 ; i<quantity ; i++){
 			registers[i].key = i;
@@ -45,7 +64,7 @@ void fillRegisters(Registro* registers, int quantity, int order){
 	} else {
 		printf("OPCAO INVALIDA\n");
 	}
-		
+
 }
 
 void shakePositions(Registro* registers, int quantity){
