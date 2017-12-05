@@ -64,3 +64,6 @@ To run there's some allowed options:
  - Using the file created above to perform a search on it. In this case we are searching for key 50000.
 
 `./b+tree -p 50000 -n file.bin`
+
+
+<b>If you liked this project please give a star! </b>
